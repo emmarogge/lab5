@@ -56,7 +56,7 @@ be any of the following options: red, crimson, orange, yellow, green,
 blue, indigo, or violet.
 ......................................................................*)
 
-type color_label = NotImplemented ;;
+type color_label = Red | Crimson | Orange | Yellow | Green | Blue | Indigo | Violet ;;
 
 (* But this is an overly simple representation of colors. Let's make
 it more usable.
@@ -91,8 +91,10 @@ which would incorporate a tuple of values for the three color
 channels. You'll want to use Simple and RGB as the value constructors
 in this new variant type.
 ......................................................................*)
-
-type color = NotImplemented ;;
+(* type RGB = ((r, g,b) : int * int * int) ;; *)
+type color = 
+  | Simple of color_label 
+  | RGB of int * int * int;;
 
 (* There is an important assumption about the RGB values that
 determine whether a color is valid or not. The RGB type presupposes an
@@ -136,11 +138,17 @@ returns that color unchanged if it's valid. However, if its argument
 is not a valid color (that is, the invariant is violated), it raises
 an Invalid_color exception with a useful message.
 ......................................................................*)
+let valid_rgb_value ((r,g,b) : int*int*int) :  bool =
+  (0 <= r && r <= 255) && (0 <= g && g <= 255) && (0 <= b && b <= 255);;
 
 exception Invalid_color of string ;;
 
-let validated_rgb = 
-  fun _ -> failwith "validated_rgb not implemented" ;;
+let validated_rgb (color : color ) : color = 
+  match color with 
+  | Simple c -> color
+  | RGB (r,g,b) -> 
+    if valid_rgb_value (r,g,b) then color
+    else raise (Invalid_color "string") ;;
 
 (*......................................................................
 Exercise 4: Write a function, make_color, that accepts three integers
@@ -148,8 +156,10 @@ for the channel values and returns a value of the color type. Be sure
 to verify the invariant.
 ......................................................................*)
 
-let make_color = 
-  fun _ -> failwith "make_color not implemented" ;;
+let make_color ((r,g,b) : int * int * int) : color = 
+  if valid_rgb_value (r,g,b) then (RGB (r,g,b))
+  else raise (Invalid_color "string");;
+
 
 (*......................................................................
 Exercise 5: Write a function, convert_to_rgb, that accepts a color and
