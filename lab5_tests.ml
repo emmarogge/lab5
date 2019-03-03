@@ -1,6 +1,5 @@
 open Lab5;;
 
-
 let unit_test (condition : bool) (msg : string) : unit =
   if condition then
     Printf.printf "%s passed\n" msg
