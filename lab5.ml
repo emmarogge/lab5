@@ -176,7 +176,7 @@ for the channel values and returns a value of the color type. Be sure
 to verify the invariant.
 ......................................................................*)
 
-let make_color ((r,g,b) : int * int * int) : color =
+let make_color (r: int) (g: int) (b: int) : color =
   validated_rgb (RGB (r, g, b)) ;;
 
 (*......................................................................

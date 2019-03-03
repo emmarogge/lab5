@@ -13,8 +13,7 @@ let test_validated_rgb () =
 
 
 let test_make_color () =
-	let c = RGB (12, 12, 100)  in
-	unit_test (make_color (12, 12, 100) = RGB (12, 12, 100)) "make_color" ;;
+	unit_test (make_color 12 12 100 = RGB (12, 12, 100)) "make_color" ;;
 
 let test_convert_to_rgb () =
 	let simple_red = Simple Red in
